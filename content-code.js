@@ -9,7 +9,7 @@ OFXHEADER:100
 DATA:OFXSGML
 VERSION:102
 SECURITY:NONE
-ENCODING:USASCII
+ENCODING:UTF-8
 CHARSET:1252
 COMPRESSION:NONE
 OLDFILEUID:NONE
@@ -30,11 +30,11 @@ NEWFILEUID:NONE
 
   const endOfx = () =>
       `
-            </BANKTRANLIST>
-          </STMTRS>
-        </STMTTRNRS>
-      </BANKMSGSRSV1>
-    </OFX>`;
+        </BANKTRANLIST>
+      </STMTRS>
+    </STMTTRNRS>
+  </BANKMSGSRSV1>
+</OFX>`;
 
   const bankStatement = (id, date, amount, description, invertSignal) => {
     if(invertSignal) return `
@@ -102,9 +102,6 @@ NEWFILEUID:NONE
   const runParserItaucard = () => {
     // grab card details
     var cardDetail = clearText(document.querySelectorAll(".fatura__nome")[1].textContent,0);
-    /*chrome.runtime.sendMessage({msg: "cardDetail", cardDetail: cardDetail}, function(response) {
-      console.log(response.status);
-    });*/
 
     var ofxOutput = startOfx(cardDetail);
 
@@ -145,9 +142,7 @@ NEWFILEUID:NONE
       }
     }
     ofxOutput = ofxOutput + endOfx();
-    //console.log(ofxOutput);
     chrome.runtime.sendMessage({msg: "ofxOutput", ofx: ofxOutput}, function(response) {
-        console.log(response.status);
     });
   }
 
@@ -170,9 +165,7 @@ NEWFILEUID:NONE
       ofxOutput = ofxOutput + '\n' + bankStatement(i,date,value,desc, false);
     }
     ofxOutput = ofxOutput + endOfx();
-    //console.log(ofxOutput);
     chrome.runtime.sendMessage({msg: "ofxOutput", ofx: ofxOutput}, function(response) {
-        console.log(response.status);
     });
   }
 
@@ -200,9 +193,7 @@ NEWFILEUID:NONE
       
     }
     ofxOutput = ofxOutput + endOfx();
-    //console.log(ofxOutput);
     chrome.runtime.sendMessage({msg: "ofxOutput", ofx: ofxOutput}, function(response) {
-        console.log(response.status);
     });
   }
 
@@ -230,9 +221,7 @@ NEWFILEUID:NONE
       
     }
     ofxOutput = ofxOutput + endOfx();
-    //console.log(ofxOutput);
     chrome.runtime.sendMessage({msg: "ofxOutput", ofx: ofxOutput}, function(response) {
-        console.log(response.status);
     });
   }
 
@@ -282,9 +271,10 @@ NEWFILEUID:NONE
           sendResponse({status: "OK"});
         } else if (request.msg === "init"){
           chrome.runtime.sendMessage({msg: "init", bank: bankDiscovery()}, function(response) {
-            console.log(response.status);
-        });
+            sendResponse({status: "OK"});
+          });
         }
+        return true;
       }
     );
   };

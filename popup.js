@@ -13,13 +13,13 @@ function main(){
         function(request, sender, sendResponse) {
             msgHandler(request);
             sendResponse({status: "OK"});
+            return true;
         }
     );
 
     // Asks for bank
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {msg: "init"}, function(response) {
-            console.log(response.status);
         });
     });
 }
@@ -29,7 +29,6 @@ function generateOFX() {
     ofxOutput = ''; //reset OFX records
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.sendMessage(tabs[0].id, {msg: "generateOFX"}, function(response) {
-            console.log(response.status);
         });
     });
 }
