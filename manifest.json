@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "OFX Exporter",
+  "description": "Exporta o extrato em OFX para diversos bancos e cartões",
+  "version": "1.0",
+  "icons": { "128": "./img/ofx-exporter.png" },
+  "browser_action": { 
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "matches": ["https://*.itau.com.br/router-app/*","https://*.google.com/*", "https://www.ib.safra.com.br/*", "https://www.verocard.com.br/para-voce"],
+    "js": ["content-code.js"]
+  }],
+  "permissions": [
+    "tabs", "activeTab"
+  ]
+}

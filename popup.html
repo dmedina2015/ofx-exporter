@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <Title>OFX EXPORTER</Title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+        <style type="text/css">
+            body {
+            min-width: 270px; /* your desired width */
+            max-width: 100%;
+            position: relative;
+            vertical-align:middle;
+            }
+            img.middle { vertical-align: middle; }
+            span.middle { vertical-align: middle; }
+        </style>
+        <script src="popup.js"></script>
+    </head>
+    <style type="text/css">
+
+    </style>
+    <body>
+        <h4><span id="title" class="inverse">OFX Exporter</span></h4>
+
+        <div class="container">
+            <div class="row">
+              <div class="col-sm-2"><img id="bankImg" src="./img/ofx-exporter.png" width="30" alt="Bank" class="middle"/></div>
+              <div class="col-sm-8"><span class="middle"><p><strong><span id="bank">Nada a exportar.</span></strong></p></span></div>
+              <div class="col-sm-2"><button style="display:none" class="primary small" id="generateOFX"><span class="icon-upload inverse"></span></button></div>
+            </div>
+        </div>
+    </body>
+</html>
