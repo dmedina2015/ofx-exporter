@@ -161,6 +161,7 @@ NEWFILEUID:NONE
       if(date) date = normalizeDate(date.textContent);
       
       var desc = trans.querySelector(".description-debit");
+      if(!desc) desc = trans.querySelector(".description-credit");
       desc = clearText(desc.textContent,0);
 
       var value = trans.querySelector(".value");
