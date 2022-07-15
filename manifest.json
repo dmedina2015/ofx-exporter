@@ -3,7 +3,7 @@
 
   "name": "OFX Exporter - Brasil",
   "description": "Exporta o extrato em OFX para diversos bancos e cartões. Suporte atual: Itaú (Cartão), Safra (C/C), Verocard, Alelo.",
-  "version": "1.0",
+  "version": "1.0.1",
   "icons": { "128": "./img/ofx-exporter.png" },
   "action": { 
     "default_popup": "popup.html"
