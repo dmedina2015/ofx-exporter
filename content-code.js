@@ -254,7 +254,7 @@ NEWFILEUID:NONE
       myBank = "Verocard";
       return myBank;
     }
-    return null;
+    return "Nada a exportar";
   }
 
   function runOnLoad(){

@@ -5,6 +5,9 @@ var ofxOutput = '';
 window.addEventListener ("load", main, false);
 
 function main(){
+    // Default text
+    document.getElementById("bank").innerText = "Nada a exportar";
+    
     // Listener to Generate OFX Button
     document.getElementById("generateOFX").addEventListener("click",generateOFX);
 
@@ -59,7 +62,7 @@ function msgHandler(request){
     }else if(request.msg === "init"){
         var bankDiv = document.getElementById("bank");
         var bankImg = document.getElementById("bankImg");
-        bankDiv.innerText = request.bank;
+        if(request.bank) bankDiv.innerText = request.bank;
 
         switch(request.bank){
             case "Alelo": 
@@ -85,6 +88,12 @@ function msgHandler(request){
                 document.getElementById("generateOFX").removeAttribute("style"); // unhide
                 document.querySelector(":root").style.setProperty('--fore-color','white');
                 document.querySelector(":root").style.setProperty('--back-color','#BD2222');
+                break;
+            default:
+                bankImg.src="./img/ofx-exporter.png";
+                document.getElementById("generateOFX").setAttribute("style","display: none"); // hide
+                document.querySelector(":root").style.setProperty('--fore-color','black');
+                document.querySelector(":root").style.setProperty('--back-color','white');
                 break;
         }
     }

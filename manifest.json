@@ -2,18 +2,15 @@
   "manifest_version": 3,
 
   "name": "OFX Exporter - Brasil",
-  "description": "Exporta o extrato em OFX para diversos bancos e cartões. Suporte atual: Itaú (Cartão de Crédito), Safra (Conta Corrente), Verocard (Alimentação), Alelo (Alimentação e Refeição).",
+  "description": "Exporta o extrato em OFX para diversos bancos e cartões. Suporte atual: Itaú (Cartão), Safra (C/C), Verocard, Alelo.",
   "version": "1.0",
   "icons": { "128": "./img/ofx-exporter.png" },
   "action": { 
     "default_popup": "popup.html"
   },
   "content_scripts": [{
-    "matches": ["https://*.itau.com.br/router-app/*", "https://www.ib.safra.com.br/*", "https://www.verocard.com.br/para-voce",
-       "https://www.meualelo.com.br/*"],
+    "matches": ["https://*.itau.com.br/router-app/*", "https://*.ib.safra.com.br/*", "https://*.verocard.com.br/*",
+       "https://*.meualelo.com.br/*"],
     "js": ["content-code.js"]
-  }],
-  "permissions": [
-    "tabs", "activeTab"
-  ]
+  }]
 }
