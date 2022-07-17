@@ -89,6 +89,12 @@ function msgHandler(request){
                 document.querySelector(":root").style.setProperty('--fore-color','white');
                 document.querySelector(":root").style.setProperty('--back-color','#BD2222');
                 break;
+            case "Santander": 
+                bankImg.src="./img/santander.png";
+                document.getElementById("generateOFX").removeAttribute("style"); // unhide
+                document.querySelector(":root").style.setProperty('--fore-color','white');
+                document.querySelector(":root").style.setProperty('--back-color','#EC0101');
+                break;
             default:
                 bankImg.src="./img/ofx-exporter.png";
                 document.getElementById("generateOFX").setAttribute("style","display: none"); // hide

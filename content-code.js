@@ -64,6 +64,29 @@ NEWFILEUID:NONE
   }
     
   const normalizeDate = (date) => {
+    // Date is in long format, ex: Segunda, 22 de Novembro de 2021
+    if(!date.includes("/") && date.includes(",")){ 
+      date = date.split(",")[1];
+      date = date.split(" de "); // Will get [22, Novembro, 2021]
+      var month = "";
+      switch(date[1].toLowerCase()){
+        case "janeiro": month="01"; break;
+        case "fevereiro": month="02"; break;
+        case "março": month="03"; break;
+        case "abril": month="04"; break;
+        case "maio": month="05"; break;
+        case "junho": month="06"; break;
+        case "julho": month="07"; break;
+        case "agosto": month="08"; break;
+        case "setembro": month="09"; break;
+        case "outubro": month="10"; break;
+        case "novembro": month="11"; break;
+        case "dezembro": month="12"; break;
+      }
+      return date[2] + month + clearText(date[0],true);
+    }
+    
+    // Date is in short format, ex: 22/11/2021
     date = clearText(date,1);
     const dateArray = date.split('/');
     var month = "";
@@ -225,6 +248,30 @@ NEWFILEUID:NONE
     });
   }
 
+  const runParserSantander = () => {
+    var ofxOutput = startOfx("Santander");
+    var i=0;
+    var transactionsTable = document.querySelector(".releases.pl-4");
+    if(transactionsTable.length == 0) return;
+    var transactions = transactionsTable.querySelectorAll(".day,.dss-list__item");
+    var thisDate = null;
+    for (trans of transactions){
+      if(trans.tagName == 'SPAN'){ // Is a date line
+        thisDate = normalizeDate(trans.innerText);
+      } else
+      {
+        i++;
+        var transDetail = trans.getElementsByClassName("dss-body");
+        var desc = clearText(transDetail[0].innerText,false);
+        var value = normalizeAmount(transDetail[1].innerText,true);
+        ofxOutput = ofxOutput + '\n' + bankStatement(i,thisDate,value,desc, true);
+      }
+    }
+    ofxOutput = ofxOutput + endOfx();
+    chrome.runtime.sendMessage({msg: "ofxOutput", ofx: ofxOutput}, function(response) {
+    });
+  }
+
   function bankDiscovery(){
     var title;
     // Check for itaucard
@@ -254,6 +301,13 @@ NEWFILEUID:NONE
       myBank = "Verocard";
       return myBank;
     }
+    
+    // Check for Santander Card
+    title = document.getElementsByClassName("dss-h2");
+    if (title.length>0 && title[0].innerText.includes("Fatura de cartões")){
+      myBank = "Santander";
+      return myBank;
+    }
     return "Nada a exportar";
   }
 
@@ -267,6 +321,7 @@ NEWFILEUID:NONE
             case "Alelo": runParserAlelo(); break;
             case "Safra": runParserSafra(); break;
             case "Verocard": runParserVerocard(); break;
+            case "Santander": runParserSantander(); break;
           }
           sendResponse({status: "OK"});
         } else if (request.msg === "init"){

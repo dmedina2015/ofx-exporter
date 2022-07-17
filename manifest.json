@@ -10,7 +10,7 @@
   },
   "content_scripts": [{
     "matches": ["https://*.itau.com.br/router-app/*", "https://*.ib.safra.com.br/*", "https://*.verocard.com.br/*",
-       "https://*.meualelo.com.br/*"],
+       "https://*.meualelo.com.br/*", "https://*.santandernet.com.br/*",  "file://*/*"],
     "js": ["content-code.js"]
   }]
 }
