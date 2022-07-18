@@ -303,8 +303,10 @@ NEWFILEUID:NONE
     }
     
     // Check for Santander Card
-    title = document.getElementsByClassName("dss-h2");
-    if (title.length>0 && title[0].innerText.includes("Fatura de cartões")){
+    var shadowContainer = document.getElementsByTagName('mfe-credit-card-payment-element');
+    if (shadowContainer.length>0) var shadowDOM = shadowContainer[0].shadowRoot;
+    title = shadowDOM.querySelectorAll(".dss-h2");
+    if (title.length>0 && title[0].innerText.includes("Fatura de Cartões")){
       myBank = "Santander";
       return myBank;
     }
