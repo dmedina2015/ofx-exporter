@@ -251,9 +251,11 @@ NEWFILEUID:NONE
   const runParserSantander = () => {
     var ofxOutput = startOfx("Santander");
     var i=0;
-    var transactionsTable = document.querySelector(".releases.pl-4");
+    var shadowContainer = document.getElementsByTagName('mfe-credit-card-payment-element');
+    if (shadowContainer.length>0) var shadowDOM = shadowContainer[0].shadowRoot;
+    var transactionsTable = shadowDOM.querySelectorAll(".releases.pl-4");
     if(transactionsTable.length == 0) return;
-    var transactions = transactionsTable.querySelectorAll(".day,.dss-list__item");
+    var transactions = transactionsTable[0].querySelectorAll(".day,.dss-list__item");
     var thisDate = null;
     for (trans of transactions){
       if(trans.tagName == 'SPAN'){ // Is a date line
