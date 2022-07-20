@@ -83,7 +83,7 @@ NEWFILEUID:NONE
         case "novembro": month="11"; break;
         case "dezembro": month="12"; break;
       }
-      return date[2] + month + clearText(date[0],true);
+      return clearText(date[2],true) + month + clearText(date[0],true);
     }
     
     // Date is in short format, ex: 22/11/2021
@@ -253,9 +253,9 @@ NEWFILEUID:NONE
     var i=0;
     var shadowContainer = document.getElementsByTagName('mfe-credit-card-payment-element');
     if (shadowContainer.length>0) var shadowDOM = shadowContainer[0].shadowRoot;
-    var transactionsTable = shadowDOM.querySelectorAll(".releases.pl-4");
+    var transactionsTable = shadowDOM.querySelectorAll(".releases.pl-4"); 
     if(transactionsTable.length == 0) return;
-    var transactions = transactionsTable[0].querySelectorAll(".day,.dss-list__item");
+    var transactions = transactionsTable[transactionsTable.length-1].querySelectorAll(".day,.dss-list__item");
     var thisDate = null;
     for (trans of transactions){
       if(trans.tagName == 'SPAN'){ // Is a date line
@@ -265,8 +265,16 @@ NEWFILEUID:NONE
         i++;
         var transDetail = trans.getElementsByClassName("dss-body");
         var desc = clearText(transDetail[0].innerText,false);
-        var value = normalizeAmount(transDetail[1].innerText,true);
-        ofxOutput = ofxOutput + '\n' + bankStatement(i,thisDate,value,desc, true);
+        if(desc.includes("Patreon")){
+          var teste = 0;
+        }
+        if(!desc.toLowerCase().includes("subtotal")){
+          var valueIndex = 1;
+          if(transDetail.length == 3) valueIndex = 2; //Compra internacional, pega valor em real
+          var value = normalizeAmount(transDetail[valueIndex].innerText,true);
+          ofxOutput = ofxOutput + '\n' + bankStatement(i,thisDate,value,desc, true);
+        }
+        
       }
     }
     ofxOutput = ofxOutput + endOfx();
@@ -308,7 +316,7 @@ NEWFILEUID:NONE
     var shadowContainer = document.getElementsByTagName('mfe-credit-card-payment-element');
     if (shadowContainer.length>0) var shadowDOM = shadowContainer[0].shadowRoot;
     title = shadowDOM.querySelectorAll(".dss-h2");
-    if (title.length>0 && title[0].innerText.includes("Fatura de Cartões")){
+    if (title.length>0 && title[0].innerText.toLowerCase().includes("fatura de cartões")){
       myBank = "Santander";
       return myBank;
     }
