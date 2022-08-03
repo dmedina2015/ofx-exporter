@@ -286,28 +286,28 @@ NEWFILEUID:NONE
     var title;
     // Check for itaucard
     title = document.getElementsByTagName("h1");
-    if (title[0] && title[0].innerText.includes("fatura e limite")){
+    if (title[0] && title[0].innerText.toLowerCase().includes("fatura e limite")){
       myBank = "Itaucard";
       return myBank;
     }
 
     // Check for Alelo
     title = document.getElementsByTagName("h5");
-    if (title[0] && title[0].innerText.includes("Alelo")){
+    if (title[0] && title[0].innerText.toLowerCase().includes("alelo")){
       myBank = "Alelo";
       return myBank;
     }
 
     // Check for Safra
     title = document.getElementsByTagName("h2");
-    if (title[0] && title[0].innerText.includes("Lançamentos")){
+    if (title[0] && title[0].innerText.toLowerCase().includes("lançamentos")){
       myBank = "Safra";
       return myBank;
     }
 
     // Check for Verocard
     title = document.getElementsByClassName("title");
-    if (title.length>0 && title[0].innerText.includes("Consultar saldo")){
+    if (title.length>0 && title[0].innerText.toLowerCase().includes("consultar saldo")){
       myBank = "Verocard";
       return myBank;
     }
